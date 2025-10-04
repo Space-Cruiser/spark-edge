@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_homepage_why_choose_us_items",
+  "info": {
+    "displayName": "whyChooseUsItem",
+    "icon": "rocket"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}
