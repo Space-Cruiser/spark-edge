@@ -28,6 +28,10 @@ interface HomepageData {
   heroTitle: string;
   heroSubtitle: string;
   heroCTA: string;
+  heroImage?: {
+    url: string;
+    alternativeText?: string;
+  };
   whyChooseUs: WhyChooseUsItem[];
   servicesPreview: ServiceItem[];
 }
@@ -36,7 +40,7 @@ interface HomepageData {
 async function getHomepageData(): Promise<HomepageData> {
   try {
     const res = await axios.get(
-      "http://localhost:1337/api/homepage?populate[whyChooseUs][populate]=icon&populate[servicesPreview][populate]=icon"
+      "http://localhost:1337/api/homepage?populate[0]=heroImage&populate[1]=whyChooseUs.icon&populate[2]=servicesPreview.icon"
     );
 
     const homepage = res.data.data;
@@ -76,6 +80,12 @@ async function getHomepageData(): Promise<HomepageData> {
       heroTitle: homepage.heroTitle,
       heroSubtitle: homepage.heroSubtitle,
       heroCTA: homepage.heroCTA,
+      heroImage: homepage.heroImage
+        ? {
+            url: `http://localhost:1337${homepage.heroImage.url}`,
+            alternativeText: homepage.heroImage.alternativeText || "Hero image",
+          }
+        : undefined,
       whyChooseUs,
       servicesPreview,
     };
@@ -85,6 +95,7 @@ async function getHomepageData(): Promise<HomepageData> {
       heroTitle: "Welcome to Spark Edge",
       heroSubtitle: "We build awesome websites",
       heroCTA: "Get Started",
+      heroImage: undefined,
       whyChooseUs: [],
       servicesPreview: [],
     };
@@ -100,6 +111,7 @@ export default async function HomePage() {
         title={data.heroTitle}
         subtitle={data.heroSubtitle}
         ctaText={data.heroCTA}
+        heroImage={data.heroImage}
       />
       <WhyChooseUs items={data.whyChooseUs} />
       <ServicesPreview services={data.servicesPreview} />

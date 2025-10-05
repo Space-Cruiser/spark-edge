@@ -1,17 +1,46 @@
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 
 interface HeroProps {
   title: string;
   subtitle: string;
   ctaText: string;
+  heroImage?: {
+    url: string;
+    alternativeText?: string;
+  };
 }
 
-export function Hero({ title, subtitle, ctaText }: HeroProps) {
+export function Hero({ title, subtitle, ctaText, heroImage }: HeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-blue-700 to-purple-800">
-      {/* Animated background elements */}
-      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
+    <section
+      className={`relative min-h-screen flex items-center justify-center overflow-hidden ${
+        heroImage
+          ? "bg-black"
+          : "bg-gradient-to-br from-blue-900 via-blue-700 to-purple-800"
+      }`}
+    >
+      {/* Background Image */}
+      {heroImage && (
+        <>
+          <Image
+            src={heroImage.url}
+            alt={heroImage.alternativeText || "Hero background"}
+            fill
+            className="object-cover opacity-50"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </>
+      )}
+
+      {/* Animated background elements - only show if no hero image */}
+      {!heroImage && (
+        <>
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
+        </>
+      )}
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
