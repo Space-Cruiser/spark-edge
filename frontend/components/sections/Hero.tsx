@@ -23,7 +23,6 @@ export function Hero({ title, subtitle, ctaText }: HeroProps) {
           <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-blue-100 leading-relaxed">
             {subtitle}
           </p>
-
           <Button
             size="lg"
             variant="outline"
